@@ -34,14 +34,95 @@ namespace twozerofoureight
             // initialize board
             HandleChanges();
         }
+        
 
         public int[,] GetBoard()
         {
             return board;
         }
 
+        public int GetScore()
+        {
+            int sum=0;
+            for(int i=0; i<boardSize; i++)
+            {
+                for(int j=0; j<boardSize; j++)
+                {
+                    sum = sum + board[i,j];
+                }
+            }
+            return sum;
+        }
+
+        public bool CheckWin()
+        {
+            bool status = false;
+            for (int i = 0; i < boardSize; i++)
+            { 
+                for (int j = 0; j < boardSize; j++)
+                {
+                    if (board[i, j] == 2048)
+                    {
+                        status = true;
+                    }
+                    
+                }
+            }
+            return status;
+        }
+
+        public bool CheckOver()
+        {
+            bool ifLose = false;
+            for (int i = 0; i < boardSize; i++)
+            {
+                for (int j = 0; j < boardSize; j++)
+                {
+                    if (board[i, j] == 0)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        if(i == 3 && j != 3)
+                        {
+                            if(board[i,j] == board[i, j + 1])
+                            {
+                                return false;
+                            }
+                        }
+                        else if(j == 3 && i  != 3)
+                        {
+                            if (board[i, j] == board[i+1, j])
+                            {
+                                return false;
+                            }
+                        }
+                        else if (i==3 && j==3)
+                        {
+                            if (board[i, j] == board[i - 1, j] || board[i, j] == board[i, j - 1])
+                            {
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            if (board[i, j] == board[i + 1, j] || board[i, j] == board[i, j + 1])
+                            {
+                                return false;
+                            }
+                        } 
+                    }  
+                }
+            }
+            ifLose = true;
+            return ifLose;
+        }
+    
+
         private void AddRandomSlot()
         {
+          
             while (true)
             {
                 int x = rand.Next(boardSize);

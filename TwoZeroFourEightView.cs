@@ -28,6 +28,30 @@ namespace twozerofoureight
         public void Notify(Model m)
         {
             UpdateBoard(((TwoZeroFourEightModel)m).GetBoard());
+            UpdateScore(((TwoZeroFourEightModel)m).GetScore());
+            UpdateIfWin(((TwoZeroFourEightModel)m).CheckWin());
+            UpdateOver(((TwoZeroFourEightModel)m).CheckOver());
+        }
+
+        public void UpdateIfWin(bool status)
+        {
+            if(status)
+            {
+                lblStatus.Text = "YOU WON!!!";
+
+            }
+        }
+        public void UpdateOver(bool ifLose)
+        {
+            if (ifLose)
+            {
+                lblOverStatus.Text = "GAMEOVER!!!";
+            }
+        }
+
+        protected void UpdateScore(int score)
+        {
+            lblScore.Text = Convert.ToString(score);
         }
 
         private void UpdateTile(Label l, int i)
@@ -79,25 +103,28 @@ namespace twozerofoureight
             UpdateTile(lbl33, board[3, 3]);
         }
 
-        private void btnLeft_Click(object sender, EventArgs e)
-        {
-            controller.ActionPerformed(TwoZeroFourEightController.LEFT);
-        }
+   
 
-        private void btnRight_Click(object sender, EventArgs e)
+        private void TwoZeroFourEightView_KeyDown(object sender, KeyEventArgs e)
         {
-            controller.ActionPerformed(TwoZeroFourEightController.RIGHT);
+            if(e.KeyCode == Keys.Right || e.KeyCode == Keys.D)
+            {
+                controller.ActionPerformed(TwoZeroFourEightController.RIGHT);
+            }
+            else if(e.KeyCode == Keys.Left || e.KeyCode == Keys.A)
+            {
+                controller.ActionPerformed(TwoZeroFourEightController.LEFT);
+            }
+            else if (e.KeyCode == Keys.Up || e.KeyCode == Keys.W)
+            {
+                controller.ActionPerformed(TwoZeroFourEightController.UP);
+            }
+            else if (e.KeyCode == Keys.Down || e.KeyCode == Keys.S)
+            {
+                controller.ActionPerformed(TwoZeroFourEightController.DOWN);
+            }
         }
-
-        private void btnUp_Click(object sender, EventArgs e)
-        {
-            controller.ActionPerformed(TwoZeroFourEightController.UP);
-        }
-
-        private void btnDown_Click(object sender, EventArgs e)
-        {
-            controller.ActionPerformed(TwoZeroFourEightController.DOWN);
-        }
-
     }
 }
+
+
